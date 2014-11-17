@@ -68,7 +68,6 @@ import com.android.phone.common.util.SettingsUtil;
 import com.android.phone.settings.AccountSelectionPreference;
 import com.android.services.telephony.sip.SipUtil;
 
-import java.lang.String;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -271,6 +270,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private Preference mVoicemailNotificationRingtone;
     private CheckBoxPreference mVoicemailNotificationVibrate;
     private AccountSelectionPreference mDefaultOutgoingAccount;
+    private boolean isSpeedDialListStarted = false;
 
     private class VoiceMailProvider {
         public VoiceMailProvider(String name, Intent intent) {
