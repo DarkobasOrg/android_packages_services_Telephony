@@ -156,12 +156,13 @@
     <!-- Theme for the activity com.android.phone.Settings, which is the
          "Mobile network settings" screen (used on non-voice-capable
          tablets as well as regular phone devices.) -->
-    <style name="Theme.Settings" parent="@android:style/Theme.Holo.DialogWhenLarge">
+    <style name="Theme.Settings" parent="@android:style/Theme.Material.DialogWhenLarge">
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:colorBackground">@*android:color/background_material_dark</item>
     </style>
 
-    <style name="SettingsLight" parent="android:Theme.Material.Light">
-        <item name="android:windowBackground">@color/phone_settings_background_color</item>
+    <style name="SettingsLight" parent="android:Theme.Material">
+        <item name="android:windowBackground">@*android:color/background_material_dark</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/DialtactsActionBarStyle</item>
         <item name="android:actionMenuTextColor">@color/phone_settings_actionbar_text_color</item>
@@ -170,9 +171,9 @@
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:colorPrimaryDark">@color/actionbar_background_color_dark</item>
         <!-- Setting text. -->
-        <item name="android:textColorPrimary">@color/setting_primary_color</item>
+        <item name="android:textColorPrimary">@*android:color/primary_text_default_material_dark</item>
         <!-- Setting description. -->
-        <item name="android:textColorSecondary">@color/setting_secondary_color</item>
+        <item name="android:textColorSecondary">@*android:color/secondary_text_default_material_dark</item>
     </style>
 
     <style name="DialerSettingsLight" parent="SettingsLight">
@@ -181,11 +182,11 @@
     </style>
 
     <style name="DialerAlertDialogTheme"
-        parent="@android:style/Theme.Material.Light.Dialog">
+        parent="@android:style/Theme.Material.Dialog">
         <item name="android:colorAccent">@color/dialer_theme_color</item>
     </style>
 
-    <style name="NetworkOperatorsSettingsTheme" parent="@android:style/Theme.Material.Light">
+    <style name="NetworkOperatorsSettingsTheme" parent="@android:style/Theme.Material">
         <item name="android:actionBarTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
         <item name="android:colorPrimary">@color/network_operators_color_primary</item>
         <item name="android:colorPrimaryDark">@color/network_operators_color_primary_dark</item>
@@ -265,14 +266,14 @@
         <item name="android:src">@drawable/overflow_menu</item>
     </style>
 
-    <style name="EmergencyDialerTheme" parent="@android:style/Theme.Material.Light">
+    <style name="EmergencyDialerTheme" parent="@android:style/Theme.Material">
         <item name="dialpad_key_button_touch_tint">@color/dialer_dialpad_touch_tint</item>
         <item name="android:actionBarStyle">@style/TelephonyActionBarStyle</item>
         <item name="android:colorPrimary">@color/dialer_theme_color</item>
         <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
     </style>
 
-    <style name="SimImportTheme" parent="@android:style/Theme.Material.Light">
+    <style name="SimImportTheme" parent="@android:style/Theme.Material">
         <item name="android:actionBarStyle">@style/TelephonyActionBarStyle</item>
         <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
     </style>
@@ -301,7 +302,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="Theme.Material.Settings" parent="@android:style/Theme.Material.Settings">
+    <style name="Theme.Material.Settings" parent="@android:style/Theme.Material">
         <item name="@*android:actionBarSize">56dip</item>
         <item name="preferenceBackgroundColor">@drawable/preference_background</item>
     </style>
