@@ -149,6 +149,8 @@
             android:targetPackage="com.android.phone"
             android:targetClass="com.android.phone.ImsEditor" />
     </PreferenceScreen>
+
+    <PreferenceScreen
         android:key="button_ipprefix_key"
         android:title="@string/ipcall_sub_title"
         android:summary="@string/ipcall_sub_summery"
@@ -189,18 +191,4 @@
                 android:targetClass="com.borqs.videocall.VTImageReplaceSetting"
                 android:targetPackage="com.borqs.videocall" />
         </PreferenceScreen>
-    <PreferenceCategory
-        android:key="pref_advanced_settings"
-        android:title="@string/advanced_settings">
-
-         <PreferenceScreen
-             android:key="button_blacklist"
-             android:title="@string/blacklist_title"
-             android:persistent="false">
-             <intent android:action="android.intent.action.MAIN"
-                 android:targetPackage="com.android.settings"
-                 android:targetClass="com.android.settings.Settings$BlacklistSettingsActivity" />
-         </PreferenceScreen>
-    </PreferenceCategory>
->>>>>>> 94c7909... Remove speed dial settings from telephony settings.
 </PreferenceScreen>
