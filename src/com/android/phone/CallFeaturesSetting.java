@@ -45,6 +45,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.SlimSeekBarPreference;
 import android.preference.SwitchPreference;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.Settings;
@@ -183,6 +184,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private static final String BUTTON_VIDEO_CALL_SP_KEY = "vt_imageplacer";
 
     private static final String PROX_AUTO_SPEAKER  = "prox_auto_speaker";
+    private static final String PROX_AUTO_SPEAKER_DELAY  = "prox_auto_speaker_delay";
     private static final String PROX_AUTO_SPEAKER_INCALL_ONLY  = "prox_auto_speaker_incall_only";
 
     private static final String BUTTON_GSM_UMTS_OPTIONS = "button_gsm_more_expand_key";
@@ -278,8 +280,9 @@ public class CallFeaturesSetting extends PreferenceActivity
     private AccountSelectionPreference mDefaultOutgoingAccount;
     private boolean isSpeedDialListStarted = false;
 
-    private CheckBoxPreference mProxSpeaker;
-    private CheckBoxPreference mProxSpeakerIncallOnly;
+    private SwitchPreference mProxSpeaker;
+    private SlimSeekBarPreference mProxSpeakerDelay;
+    private SwitchPreference mProxSpeakerIncallOnly;
 
     private class VoiceMailProvider {
         public VoiceMailProvider(String name, Intent intent) {
@@ -649,6 +652,22 @@ public class CallFeaturesSetting extends PreferenceActivity
                 mChangingVMorFwdDueToProviderChange = true;
                 saveVoiceMailAndForwardingNumber(newProviderKey, newProviderSettings);
             }
+        } else if (preference == mButtonAutoRetry) {
+            android.provider.Settings.Global.putInt(mPhone.getContext().getContentResolver(),
+                    android.provider.Settings.Global.CALL_AUTO_RETRY,
+                    (Boolean) objValue ? 1 : 0);
+        } else if (preference == mButtonHAC) {
+            int hac = (Boolean) objValue ? 1 : 0;
+            // Update HAC value in Settings database
+            Settings.System.putInt(mPhone.getContext().getContentResolver(),
+                    Settings.System.HEARING_AID, hac);
+
+            // Update HAC Value in AudioManager
+            mAudioManager.setParameter(HAC_KEY, hac != 0 ? HAC_VAL_ON : HAC_VAL_OFF);
+        } else if (preference == mProxSpeakerDelay) {
+            int delay = Integer.valueOf((String) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, delay);
         }
         // always let the preference setting proceed.
         return true;
@@ -1651,8 +1670,17 @@ public class CallFeaturesSetting extends PreferenceActivity
         mVoicemailProviders = (ListPreference) findPreference(BUTTON_VOICEMAIL_PROVIDER_KEY);
         mIPPrefixPreference = (PreferenceScreen) findPreference(BUTTON_IPPREFIX_KEY);
 
-        mProxSpeaker = (CheckBoxPreference) findPreference(PROX_AUTO_SPEAKER);
-        mProxSpeakerIncallOnly = (CheckBoxPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
+        mProxSpeaker = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER);
+        mProxSpeakerIncallOnly = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
+        mProxSpeakerDelay = (SlimSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
+        if (mProxSpeakerDelay != null) {
+            mProxSpeakerDelay.setDefault(100);
+            mProxSpeakerDelay.isMilliseconds(true);
+            mProxSpeakerDelay.setInterval(1);
+            mProxSpeakerDelay.minimumValue(100);
+            mProxSpeakerDelay.multiplyValue(100);
+            mProxSpeakerDelay.setOnPreferenceChangeListener(this);
+        }
 
         if (mVoicemailProviders != null) {
             mVoicemailProviders.setOnPreferenceChangeListener(this);
@@ -1730,6 +1758,12 @@ public class CallFeaturesSetting extends PreferenceActivity
                     mProxSpeakerIncallOnly.setChecked(Settings.System.getInt(contentResolver,
                             Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY, 0) == 1);
                 }
+                if (mProxSpeakerDelay != null) {
+                    final int proxDelay = Settings.System.getInt(getContentResolver(),
+                            Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, 100);
+                    // minimum 100 is 1 interval of the 100 multiplier 
+                    mProxSpeakerDelay.setInitValue((proxDelay / 100) - 1);
+                }
             } else {
                 prefSet.removePreference(mProxSpeaker);
                 mProxSpeaker = null;
@@ -1737,12 +1771,14 @@ public class CallFeaturesSetting extends PreferenceActivity
                     prefSet.removePreference(mProxSpeakerIncallOnly);
                     mProxSpeakerIncallOnly = null;
                 }
+                if (mProxSpeakerDelay != null) {
+                    prefSet.removePreference(mProxSpeakerDelay);
+                    mProxSpeakerDelay = null;
+                }
             }
         }
 
-
-        if (!getResources().getBoolean(R.bool.world_phone) && (!isMsim)) {
-
+        if (!getResources().getBoolean(R.bool.world_phone)) {
             Preference options = prefSet.findPreference(BUTTON_CDMA_OPTIONS);
             if (options != null) {
                 prefSet.removePreference(options);
