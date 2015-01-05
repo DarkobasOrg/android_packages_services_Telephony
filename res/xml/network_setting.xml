@@ -27,6 +27,7 @@
         android:key="button_roaming_key"
         android:title="@string/roaming"
         android:persistent="false"
+        android:defaultValue="false"
         android:summaryOn="@string/roaming_enable"
         android:summaryOff="@string/roaming_disable"/>
 
