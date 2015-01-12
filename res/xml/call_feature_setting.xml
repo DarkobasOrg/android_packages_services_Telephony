@@ -158,7 +158,7 @@
     </PreferenceScreen>
 
     <!-- Add videocall settings menu  -->
-    <PreferenceCategory
+<!--    <PreferenceCategory
         android:key="button_videocall_settings_key"
         android:title="@string/videocall_settings"
         android:persistent="false" />
@@ -181,7 +181,7 @@
                 android:targetClass="com.borqs.videocall.VTCallForwardOptions"
                 android:targetPackage="com.borqs.videocall" />
         </PreferenceScreen>
-<!--        <PreferenceScreen
+        <PreferenceScreen
             android:key="vt_imageplacer"
             android:persistent="false"
             android:summary="@string/vt_imagereplace_setting_sum"
