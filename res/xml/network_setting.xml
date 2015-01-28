@@ -15,8 +15,7 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:phone="http://schemas.android.com/apk/res/com.android.phone"
-        android:title="@string/mobile_networks"
-        android:background="@*android:color/background_material_dark" >
+        android:title="@string/mobile_networks">
 
     <PreferenceScreen
         android:key="cdma_lte_data_service_key"
