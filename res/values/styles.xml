@@ -158,6 +158,7 @@
          tablets as well as regular phone devices.) -->
     <style name="Theme.Settings" parent="@android:style/Theme.Holo.DialogWhenLarge">
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:navigationBarColor">@color/actionbar_background_color_dark</item>
     </style>
 
     <style name="SettingsLight" parent="android:Theme.Material.Light">
@@ -169,6 +170,7 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:colorPrimaryDark">@color/actionbar_background_color_dark</item>
+        <item name="android:navigationBarColor">@color/actionbar_background_color_dark</item>
     </style>
 
     <style name="DialerSettingsLight" parent="SettingsLight">
@@ -185,6 +187,7 @@
         <item name="android:actionBarTheme">@android:style/ThemeOverlay.Material.Dark.ActionBar</item>
         <item name="android:colorPrimary">@color/network_operators_color_primary</item>
         <item name="android:colorPrimaryDark">@color/network_operators_color_primary_dark</item>
+        <item name="android:navigationBarColor">@color/actionbar_background_color_dark</item>
     </style>
 
     <style name="Empty" parent="@android:style/Theme.Holo">
@@ -300,5 +303,6 @@
     <style name="Theme.Material.Settings" parent="@android:style/Theme.Material.Settings">
         <item name="@*android:actionBarSize">56dip</item>
         <item name="preferenceBackgroundColor">@drawable/preference_background</item>
+        <item name="android:navigationBarColor">@color/actionbar_background_color_dark</item>
     </style>
 </resources>
