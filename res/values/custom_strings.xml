@@ -24,4 +24,7 @@
     <string name="prox_auto_speaker_incall_only_title">Only while in call</string>
     <string name="prox_auto_speaker_incall_only_summary_on">On outgoing calls, listener will only become active after the receiving party answers</string>
     <string name="prox_auto_speaker_incall_only_summary_off">Listener will be active during all offhook call states (default)</string>
+    <string-array name="dialer_default_classes" translatable="false">
+        <item>com.android.dialer/com.android.dialer.DialtactsActivity</item>
+    </string-array>
 </resources>
